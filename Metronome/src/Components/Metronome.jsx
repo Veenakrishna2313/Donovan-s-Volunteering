@@ -38,7 +38,8 @@ const Metronome = () => {
             aria-label="Default"
             valueLabelDisplay="auto"
             value={tempo}
-            onChange={setTempo(value)}
+            onChange={e=>setTempo(e.target.value)}
+            
           />
         </Box>
       </div>
