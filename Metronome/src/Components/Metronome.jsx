@@ -10,10 +10,13 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
+import clickSound from "../assets/metronome-85688.mp3";
 
 const Metronome = () => {
   const [isPlaying, setisPlaying] = useState(false);
   const [tempo, setTempo] = useState(120);
+
+  const audio = new Audio(clickSound);
 
   useEffect(() => {
     console.log("isPlaying is", isPlaying);
@@ -22,6 +25,8 @@ const Metronome = () => {
     if (isPlaying === true) {
       interval = setInterval(() => {
         console.log("I am playing");
+        audio.currentTime = 0;
+        audio.play();
       }, intervalTime);
     }
 
@@ -30,6 +35,19 @@ const Metronome = () => {
 
   const handleClick = () => {
     setisPlaying((prev) => !prev);
+  };
+
+  const handleIncrement = () => {
+    console.log("I am Inresing");
+    setTempo((prev) => {
+      return prev + 1;
+    });
+    console.log("Tempo ", tempo);
+  };
+
+  const handleDecrement = () => {
+    console.log("I am decresing");
+    setTempo((prev) => prev - 1);
   };
 
   return (
@@ -55,7 +73,12 @@ const Metronome = () => {
       <div>
         <Container maxWidth="sm">
           <Stack spacing={1} direction="row" sx={{ mb: 1 }} alignItems="center">
-            <Fab size="small" color="primary" aria-label="decrease">
+            <Fab
+              size="small"
+              color="primary"
+              aria-label="decrease"
+              onClick={handleDecrement}
+            >
               <ArrowBackIosIcon sx={{ fontSize: 15 }} />
             </Fab>
             <Slider
@@ -68,16 +91,19 @@ const Metronome = () => {
               onChange={(e) => setTempo(e.target.value)}
             />
             <Fab size="small" color="primary" aria-label="increase">
-              <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
+              <ArrowForwardIosIcon
+                sx={{ fontSize: 15 }}
+                onClick={handleIncrement}
+              />
             </Fab>
           </Stack>
           <Container>
             <Button
               variant="outlined"
-              endIcon={<PlayArrowIcon />}
+              endIcon={!isPlaying ? <PlayArrowIcon /> : <StopIcon />}
               onClick={handleClick}
             >
-              Start
+              {isPlaying ? "Stop" : "Start"}
             </Button>
           </Container>
         </Container>
