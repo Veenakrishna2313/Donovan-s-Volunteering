@@ -5,8 +5,7 @@ function App() {
   return (
     <>
       <div>
-        Hello
-        <Metronome />
+         <Metronome />
       </div>
     </>
   );

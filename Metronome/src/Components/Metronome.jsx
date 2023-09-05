@@ -1,15 +1,39 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Typography, makeStyles } from "@material-ui/core";
 import Slider from "@mui/material/Slider";
-import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Fab from "@mui/material/Fab";
+import Stack from "@mui/material/Stack";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Button from "@mui/material/Button";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
 
 const Metronome = () => {
   const [isPlaying, setisPlaying] = useState(false);
   const [tempo, setTempo] = useState(120);
 
+  useEffect(() => {
+    console.log("isPlaying is", isPlaying);
+    let interval;
+    let intervalTime = 60000 / tempo;
+    if (isPlaying === true) {
+      interval = setInterval(() => {
+        console.log("I am playing");
+      }, intervalTime);
+    }
+
+    return () => clearInterval(interval);
+  }, [isPlaying, tempo]);
+
+  const handleClick = () => {
+    setisPlaying((prev) => !prev);
+  };
+
   return (
-    <div>
+    <Container>
       <Typography>Metronome</Typography>
       <div>
         <Typography>BPM</Typography>
@@ -28,22 +52,37 @@ const Metronome = () => {
         {tempo > 140 && tempo <= 176 && "Presto"}
         {tempo > 177 && tempo <= 240 && "Prestissimo"}
       </div>
-
       <div>
-        <Box sx={{ width: 400 }}>
-          <Slider
-            min={0}
-            max={240}
-            defaultValue={tempo}
-            aria-label="Default"
-            valueLabelDisplay="auto"
-            value={tempo}
-            onChange={e=>setTempo(e.target.value)}
-            
-          />
-        </Box>
+        <Container maxWidth="sm">
+          <Stack spacing={1} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <Fab size="small" color="primary" aria-label="decrease">
+              <ArrowBackIosIcon sx={{ fontSize: 15 }} />
+            </Fab>
+            <Slider
+              min={1}
+              max={240}
+              defaultValue={tempo}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              value={tempo}
+              onChange={(e) => setTempo(e.target.value)}
+            />
+            <Fab size="small" color="primary" aria-label="increase">
+              <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
+            </Fab>
+          </Stack>
+          <Container>
+            <Button
+              variant="outlined"
+              endIcon={<PlayArrowIcon />}
+              onClick={handleClick}
+            >
+              Start
+            </Button>
+          </Container>
+        </Container>
       </div>
-    </div>
+    </Container>
   );
 };
 
