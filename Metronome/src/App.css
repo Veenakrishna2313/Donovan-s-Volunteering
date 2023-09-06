@@ -1,0 +1,33 @@
+body {
+  text-align: center;
+  font-size: 20px;
+  
+}
+
+.heading {
+  color: rgb(79, 76, 76);
+  font-weight: 900;
+}
+
+.border {
+  border: 1px solid rgb(128, 123, 123);
+  border-radius: 2px;
+  padding:0;
+  background-color: rgb(237, 232, 232);
+}
+.main-container {
+  margin-top: 4rem;
+}
+
+.padding-bottom-2x{
+  padding-bottom: 2rem;
+}
+
+.padding-top-2x{
+  padding-top: 2rem;
+}
+
+Button:hover{
+  color:rgb(96, 142, 96);
+  outline:none;
+}

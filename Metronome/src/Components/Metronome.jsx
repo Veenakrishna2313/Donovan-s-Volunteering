@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import clickSound from "../assets/metronome-85688.mp3";
+import "../App.css";
 
 const Metronome = () => {
   const [isPlaying, setisPlaying] = useState(false);
@@ -51,12 +52,15 @@ const Metronome = () => {
   };
 
   return (
-    <Container>
-      <Typography>Metronome</Typography>
-      <div>
-        <Typography>BPM</Typography>
-        <Typography>{tempo}</Typography>
-        {tempo >= 0 && tempo <= 20 && "Larghissimo"}
+    <Container maxWidth="sm" className="main-container">
+      <div className="stack-container">
+        <Typography variant="h4" className="heading border">
+          BPM
+        </Typography>
+        <Typography variant="h1" className="padding-bottom-2x ">
+          {tempo}
+        </Typography>
+        {tempo >= 1 && tempo <= 20 && "Larghissimo"}
         {tempo > 20 && tempo <= 40 && "Grave"}
         {tempo > 40 && tempo <= 45 && "Largo"}
         {tempo > 45 && tempo <= 50 && "Lento"}
@@ -66,19 +70,14 @@ const Metronome = () => {
         {tempo > 90 && tempo <= 96 && "Moderato"}
         {tempo > 96 && tempo <= 108 && "Allegretto"}
         {tempo > 108 && tempo <= 131 && "Allegro"}
-        {tempo > 132 && tempo <= 139 && "Vivace"}
-        {tempo > 140 && tempo <= 176 && "Presto"}
-        {tempo > 177 && tempo <= 240 && "Prestissimo"}
+        {tempo > 131 && tempo <= 139 && "Vivace"}
+        {tempo > 139 && tempo <= 176 && "Presto"}
+        {tempo > 176 && tempo <= 240 && "Prestissimo"}
       </div>
       <div>
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" className="main-container">
           <Stack spacing={1} direction="row" sx={{ mb: 1 }} alignItems="center">
-            <Fab
-              size="small"
-              color="primary"
-              aria-label="decrease"
-              onClick={handleDecrement}
-            >
+            <Fab size="small" aria-label="decrease" onClick={handleDecrement}>
               <ArrowBackIosIcon sx={{ fontSize: 15 }} />
             </Fab>
             <Slider
@@ -89,19 +88,28 @@ const Metronome = () => {
               valueLabelDisplay="auto"
               value={tempo}
               onChange={(e) => setTempo(e.target.value)}
+              sx={{
+                color: "green",
+              }}
             />
-            <Fab size="small" color="primary" aria-label="increase">
+            <Fab size="small" aria-label="increase">
               <ArrowForwardIosIcon
                 sx={{ fontSize: 15 }}
                 onClick={handleIncrement}
               />
             </Fab>
           </Stack>
-          <Container>
+
+          <Container className="main-container">
             <Button
               variant="outlined"
               endIcon={!isPlaying ? <PlayArrowIcon /> : <StopIcon />}
               onClick={handleClick}
+              className="play-button"
+              sx={{
+                borderColor: "green",
+                color: "green",
+              }}
             >
               {isPlaying ? "Stop" : "Start"}
             </Button>
